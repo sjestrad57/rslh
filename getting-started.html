@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STR Listing Configurator — Getting Started</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #F8FAFC;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  /* Header */
+  .header {
+    background: #1E3A5F;
+    color: white;
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-left h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .header-left p {
+    font-size: 13px;
+    color: #2E86AB;
+    margin-top: 4px;
+  }
+  .badge {
+    background: #2E86AB;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    background: #152840;
+    padding: 16px 40px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    overflow-x: auto;
+  }
+  .progress-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #2E86AB;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-label {
+    color: #A8C8E8;
+    font-size: 12px;
+  }
+  .step-arrow {
+    color: #2E86AB;
+    font-size: 14px;
+    margin: 0 4px;
+  }
+
+  /* Main content */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+
+  /* Step cards */
+  .step-card {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 24px;
+    border: 1px solid #E8EDF2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .step-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #1E3A5F;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1E3A5F;
+  }
+  .step-subtitle {
+    font-size: 13px;
+    color: #888;
+    margin-top: 2px;
+  }
+
+  /* Content elements */
+  p { color: #555; font-size: 14px; margin-bottom: 12px; }
+  
+  .info-box {
+    background: #EBF4FA;
+    border-left: 4px solid #2E86AB;
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+    font-size: 13px;
+    color: #1E3A5F;
+  }
+
+  .field-card {
+    background: #F8FAFC;
+    border: 1px solid #E0E8F0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .field-name {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1E3A5F;
+    background: #E8F0F8;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .field-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+  .field-prop {
+    font-size: 12px;
+    color: #666;
+  }
+  .field-prop strong {
+    color: #333;
+  }
+
+  /* Steps list */
+  .steps-list {
+    list-style: none;
+    padding: 0;
+  }
+  .steps-list li {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid #F0F0F0;
+    font-size: 14px;
+    color: #555;
+    align-items: flex-start;
+  }
+  .steps-list li:last-child { border-bottom: none; }
+  .check {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #27AE60;
+    color: white;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Tier table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  th {
+    background: #1E3A5F;
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 11px 16px;
+    border-bottom: 1px solid #EEE;
+    color: #555;
+  }
+  tr:nth-child(even) td { background: #F8FAFC; }
+  .tier-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .starter { background: #EBF4FA; color: #2E86AB; }
+  .growth  { background: #FFF3E0; color: #E67E22; }
+  .pro     { background: #E8F8F0; color: #27AE60; }
+
+  /* Troubleshoot */
+  .trouble-item {
+    background: #FFF8F0;
+    border: 1px solid #FFE0B2;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .trouble-q {
+    font-weight: 700;
+    color: #E67E22;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  .trouble-a {
+    font-size: 13px;
+    color: #555;
+  }
+
+  /* Contact */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .contact-card {
+    background: #F8FAFC;
+    border: 1px solid #E0E8F0;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  .contact-icon { font-size: 24px; margin-bottom: 8px; }
+  .contact-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+  .contact-value { font-size: 13px; font-weight: 600; color: #1E3A5F; margin-top: 4px; }
+
+  /* Footer */
+  .footer {
+    background: #1E3A5F;
+    color: #6699BB;
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    margin-top: 40px;
+  }
+  .footer a { color: #2E86AB; text-decoration: none; }
+
+  /* Nav path */
+  .nav-path {
+    background: #F0F4F8;
+    border: 1px solid #DDE4EC;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: #1E3A5F;
+    margin: 12px 0;
+    display: inline-block;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <h1>STR Listing Configurator</h1>
+    <p>Getting Started Guide — Powered by Accompels</p>
+  </div>
+  <div class="badge">v1.0</div>
+</div>
+
+<!-- Progress -->
+<div class="progress-bar">
+  <div class="progress-step">
+    <div class="step-num">1</div>
+    <span class="step-label">Install App</span>
+  </div>
+  <span class="step-arrow">›</span>
+  <div class="progress-step">
+    <div class="step-num">2</div>
+    <span class="step-label">Create Custom Fields</span>
+  </div>
+  <span class="step-arrow">›</span>
+  <div class="progress-step">
+    <div class="step-num">3</div>
+    <span class="step-label">Set Client Tier</span>
+  </div>
+  <span class="step-arrow">›</span>
+  <div class="progress-step">
+    <div class="step-num">4</div>
+    <span class="step-label">Go Live</span>
+  </div>
+  <span class="step-arrow">›</span>
+  <div class="progress-step">
+    <div class="step-num">5</div>
+    <span class="step-label">Manage Upgrades</span>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="container">
+
+  <!-- Overview -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-circle">📋</div>
+      <div>
+        <div class="step-title">Overview</div>
+        <div class="step-subtitle">What this app does and how it works</div>
+      </div>
+    </div>
+    <p>STR Listing Configurator automatically enforces tier-based listing limits for short-term rental businesses running on GoHighLevel's Rental module.</p>
+    <p>When a client reaches their plan limit and attempts to add a new listing, a branded upgrade prompt fires automatically — stopping the action and presenting a clear call to upgrade their plan.</p>
+    <div class="info-box">
+      💡 <strong>No hard errors, no broken experience.</strong> Just a clean, professional soft block that turns every limit hit into an automatic upsell opportunity.
+    </div>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-circle">1</div>
+      <div>
+        <div class="step-title">Install the App</div>
+        <div class="step-subtitle">Install on your agency account through GHL Marketplace</div>
+      </div>
+    </div>
+    <ul class="steps-list">
+      <li><div class="check">✓</div>Go to your GHL Agency Dashboard</li>
+      <li><div class="check">✓</div>Navigate to App Marketplace</li>
+      <li><div class="check">✓</div>Search for STR Listing Configurator</li>
+      <li><div class="check">✓</div>Click Install — the app is now active on your agency</li>
+    </ul>
+    <div class="info-box">
+      🔒 This is a <strong>private, agency-only app</strong>. Only your agency can install and manage it across client sub-accounts.
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-circle">2</div>
+      <div>
+        <div class="step-title">Create Custom Fields</div>
+        <div class="step-subtitle">Set up two custom fields in each client sub-account</div>
+      </div>
+    </div>
+    <p>Navigate to the client sub-account and create these two fields:</p>
+    <span class="nav-path">Sub-account Settings → Custom Fields → + Add Field</span>
+
+    <div class="field-card">
+      <div class="field-name">rental_tier</div>
+      <div class="field-row">
+        <span class="field-prop"><strong>Type:</strong> Dropdown (single)</span>
+        <span class="field-prop"><strong>Object:</strong> Contact</span>
+        <span class="field-prop"><strong>Options:</strong> starter, growth, pro</span>
+      </div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-name">listing_limit</div>
+      <div class="field-row">
+        <span class="field-prop"><strong>Type:</strong> Number</span>
+        <span class="field-prop"><strong>Object:</strong> Contact</span>
+        <span class="field-prop"><strong>Example values:</strong> 5, 20, 999</span>
+      </div>
+    </div>
+
+    <div class="info-box">
+      📌 Field keys will be assigned automatically as <strong>contact.rental_tier</strong> and <strong>contact.listing_limit</strong>. The app reads these keys to enforce limits.
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-circle">3</div>
+      <div>
+        <div class="step-title">Set Client Tier</div>
+        <div class="step-subtitle">Configure each client's plan limits at onboarding</div>
+      </div>
+    </div>
+    <p>For each new client, set their tier values in their sub-account custom fields:</p>
+    <ul class="steps-list">
+      <li><div class="check">✓</div>Open the client's sub-account</li>
+      <li><div class="check">✓</div>Go to Settings → Custom Fields</li>
+      <li><div class="check">✓</div>Set <strong>rental_tier</strong> to their plan (starter, growth, or pro)</li>
+      <li><div class="check">✓</div>Set <strong>listing_limit</strong> to their allowed number of listings</li>
+    </ul>
+
+    <table>
+      <tr>
+        <th>Tier</th>
+        <th>rental_tier value</th>
+        <th>listing_limit value</th>
+        <th>Notes</th>
+      </tr>
+      <tr>
+        <td><span class="tier-badge starter">Starter</span></td>
+        <td>starter</td>
+        <td>5</td>
+        <td>Entry level plan</td>
+      </tr>
+      <tr>
+        <td><span class="tier-badge growth">Growth</span></td>
+        <td>growth</td>
+        <td>20</td>
+        <td>Mid-tier plan</td>
+      </tr>
+      <tr>
+        <td><span class="tier-badge pro">Pro</span></td>
+        <td>pro</td>
+        <td>999</td>
+        <td>Use 999 for unlimited</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-circle">4</div>
+      <div>
+        <div class="step-title">Go Live — Client Experience</div>
+        <div class="step-subtitle">What your client sees once configured</div>
+      </div>
+    </div>
+    <p>Once configured, the app runs automatically with zero maintenance:</p>
+    <ul class="steps-list">
+      <li><div class="check">✓</div>Client logs into their sub-account via <strong>app.accompels.com</strong></li>
+      <li><div class="check">✓</div>Navigates to Calendars → Rentals → Listings</li>
+      <li><div class="check">✓</div>Adds listings freely up to their plan limit</li>
+      <li><div class="check">✓</div>At the limit — clicks + New Listing</li>
+      <li><div class="check">✓</div>Branded upgrade modal fires automatically</li>
+      <li><div class="check">✓</div>Client clicks Upgrade My Plan → directed to your pricing page</li>
+    </ul>
+    <div class="info-box">
+      ⚡ <strong>Every limit hit is an automatic upsell.</strong> No manual follow-up needed — the app handles the upgrade prompt for you.
+    </div>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-circle">5</div>
+      <div>
+        <div class="step-title">Managing Upgrades</div>
+        <div class="step-subtitle">What to do when a client upgrades their plan</div>
+      </div>
+    </div>
+    <p>When a client upgrades their plan, update their custom fields:</p>
+    <ul class="steps-list">
+      <li><div class="check">✓</div>Go to the client's sub-account</li>
+      <li><div class="check">✓</div>Navigate to Settings → Custom Fields</li>
+      <li><div class="check">✓</div>Update <strong>rental_tier</strong> to their new tier</li>
+      <li><div class="check">✓</div>Update <strong>listing_limit</strong> to their new limit</li>
+      <li><div class="check">✓</div>Client can immediately add more listings — no restart needed</li>
+    </ul>
+    <div class="info-box">
+      🔄 <strong>Phase 2 Enhancement:</strong> Connect Stripe webhooks to GHL workflows to auto-update custom fields when a client upgrades — fully automated with zero manual steps.
+    </div>
+  </div>
+
+  <!-- Troubleshooting -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-circle">🔧</div>
+      <div>
+        <div class="step-title">Troubleshooting</div>
+        <div class="step-subtitle">Common issues and how to resolve them</div>
+      </div>
+    </div>
+
+    <div class="trouble-item">
+      <div class="trouble-q">❓ Modal not firing when client clicks + New Listing</div>
+      <div class="trouble-a">
+        Confirm the client is accessing GHL through <strong>app.accompels.com</strong> and not app.gohighlevel.com. Verify listing_limit custom field is set correctly and the client is at or above their limit.
+      </div>
+    </div>
+
+    <div class="trouble-item">
+      <div class="trouble-q">❓ Listing count appears incorrect</div>
+      <div class="trouble-a">
+        Refresh the Rentals listings page and try again. If the issue persists, contact support — the listing count selector may need updating due to a GHL platform update.
+      </div>
+    </div>
+
+    <div class="trouble-item">
+      <div class="trouble-q">❓ Client can still add listings after reaching limit</div>
+      <div class="trouble-a">
+        Verify the custom fields are set at the sub-account level and not the agency level. Also confirm the client is using a User-level role and not an Admin role.
+      </div>
+    </div>
+
+    <div class="trouble-item">
+      <div class="trouble-q">❓ Modal shows wrong plan name or limit number</div>
+      <div class="trouble-a">
+        Check that rental_tier and listing_limit custom field keys match exactly: <strong>contact.rental_tier</strong> and <strong>contact.listing_limit</strong>. Field keys are case-sensitive.
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-circle">💬</div>
+      <div>
+        <div class="step-title">Need Help?</div>
+        <div class="step-subtitle">Our team is here to support you</div>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📧</div>
+        <div class="contact-label">Email</div>
+        <div class="contact-value">support@accompels.com</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🌐</div>
+        <div class="contact-label">Website</div>
+        <div class="contact-value">accompels.com/support</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <div class="contact-label">Phone</div>
+        <div class="contact-value">+1 925 639 7930</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  STR Listing Configurator — Powered by <a href="https://accompels.com">Accompels</a> &nbsp;|&nbsp; Built for GHL Rental Module &nbsp;|&nbsp; v1.0
+</div>
+
+</body>
+</html>
